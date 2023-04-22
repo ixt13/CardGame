@@ -3,7 +3,7 @@ function gameStart() {
         tag:'div', class:'game',content:[
             {tag:'div',cls:'section',content:[
                 {tag:'div',cls:'section_content',content:[
-                    {tag:'p',cls:'section-title',content:'Выбери сложность'},
+                    {tag:'p',cls:'section-title',content:'Выбери '<br>' сложность'},
                     {tag:'div',cls:'section_selectors',content:[
                         {tag:'div',cls:'section_selector',content:'1'},
                         {tag:'div',cls:'section_selector',content:'2'},
@@ -16,6 +16,10 @@ function gameStart() {
         ]
     }
 };
+
+
+
+
 
 
 
