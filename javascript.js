@@ -38,6 +38,6 @@ class cardGame {
 
     thirdLvl() {
         this.container.replaceChildren()
-        console.log('thirdLvl')
+        this.container.appendChild(templateEngine(showCardsTemplate()))
     }
 }
