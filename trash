@@ -1,0 +1,77 @@
+console.log(cardDeck[i])
+
+for (let i = 0; i < Object.keys(cardDeck).length; i++) {
+    debugger
+}
+
+cardItems.forEach((card, index) => {
+    card.addEventListener('click', (event) => {
+        card.src = finalCardDeck[index].img
+        if (firstCard === null) {
+            firstCard = index
+        } else if (index != firstCard) {
+            secondCard = index
+        }
+
+        if (
+            firstCard !== null &&
+            secondCard !== null &&
+            firstCard !== secondCard
+        ) {
+            if (cardItems[firstCard].src === cardItems[secondCard].src) {
+                cardItems[firstCard].classList.add('identical')
+                cardItems[secondCard].classList.add('identical')
+                firstCard = null
+                secondCard = null
+            } else if (cardItems[firstCard].src !== cardItems[secondCard].src) {
+                setTimeout(() => {
+                    console.log(card.src)
+                    cardItems[firstCard].src = './static/рубашка.svg'
+                    cardItems[secondCard].src = './static/рубашка.svg'
+                    firstCard = null
+                    secondCard = null
+                    console.log(card)
+                }, 500)
+            }
+        }
+    })
+})
+
+cardItems.forEach((card, index) => {
+    card.addEventListener('click', (event) => {
+        if ((clickable = true)) {
+            card.src = finalCardDeck[index].img
+            if (firstCard === null) {
+                firstCard = index
+            } else if (index != firstCard) {
+                secondCard = index
+                clickable = false
+            }
+
+            if (
+                firstCard !== null &&
+                secondCard !== null &&
+                firstCard !== secondCard
+            ) {
+                if (cardItems[firstCard].src === cardItems[secondCard].src) {
+                    cardItems[firstCard].classList.add('identical')
+                    cardItems[secondCard].classList.add('identical')
+                    firstCard = null
+                    secondCard = null
+                } else if (
+                    cardItems[firstCard].src !== cardItems[secondCard].src
+                ) {
+                    setTimeout(() => {
+                        clickable === false
+                        console.log(card.src)
+                        cardItems[firstCard].src = './static/рубашка.svg'
+                        cardItems[secondCard].src = './static/рубашка.svg'
+                        firstCard = null
+                        secondCard = null
+                        clickable === true
+                    }, 500)
+                }
+            }
+        }
+    })
+})
