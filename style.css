@@ -48,7 +48,11 @@ body{
     align-items: center;
     justify-content: space-around;
 
-   
+
+}
+
+.section_selector:hover{
+    cursor: pointer;
 }
 .section-title{
     font-style: normal;
