@@ -1,22 +1,28 @@
 @font-face {
     font-family: StratosSkyeng;
-    src: url(./statosskyeng-v1.001/WebFonts/stratosskyengweb-regular.woff2);
+    src: url('./statosskyeng-v1.001/WebFonts/stratosskyengweb-regular.woff2')
+            format('woff2'),
+        url('./statosskyeng-v1.001/WebFonts/stratosskyengweb-regular.woff2')
+            format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
 }
 
 * {
-    padding: 0px;
-    margin: 0px;
+    padding: 0;
+    margin: 0;
     box-sizing: border-box;
 }
+
 body {
     background-color: #004980;
-    font-family: StratosSkyeng, 'StratosSkyeng', normal;
+    font-family: StratosSkyeng, Arial, sans-serif;
 }
 
 .section_content {
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
     align-items: center;
     padding-top: 52px;
 }
@@ -28,14 +34,15 @@ body {
     padding-top: 48px;
     padding-bottom: 68px;
     color: #0080c1;
-    font-family: 'StratosSkyeng';
+    font-family: StratosSkyeng, Arial, sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 64px;
     line-height: 72px;
 }
+
 .section_selector {
-    background: #ffffff;
+    background: #fff;
     border-radius: 12px;
     width: 98px;
     height: 98px;
@@ -48,6 +55,7 @@ body {
 .section_selector:hover {
     cursor: pointer;
 }
+
 .section-title {
     font-style: normal;
     font-weight: 400;
@@ -87,11 +95,39 @@ body {
     margin-bottom: 40px;
     margin-top: 18px;
 }
-.game_mainContent-cards {
+
+.game_table {
     display: grid;
-    grid-template-columns: repeat(9, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     gap: 15px;
-    width: 975px;
+    width: fit-content;
     margin: auto;
     justify-items: center;
+    grid-area: auto;
+}
+
+.game_topContent-button {
+    width: 246px;
+    height: 50px;
+    background: #7ac100;
+    border-radius: 12px;
+    border: 0;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 32px;
+    color: #fff;
+}
+
+.hidden {
+    display: none;
+}
+
+.identical {
+    border: #7ac100 3px solid;
+    border-radius: 5%;
+}
+
+.card {
+    cursor: pointer;
 }
