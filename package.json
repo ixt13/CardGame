@@ -16,8 +16,11 @@
         "webpack-dev-server": "^4.13.3"
     },
     "dependencies": {
+        "@types/lodash": "^4.14.194",
         "husky": "^8.0.3",
         "style-loader": "^3.3.2",
+        "ts-loader": "^9.4.2",
+        "typescript": "^5.0.4",
         "webpack": "^5.80.0"
     },
     "name": "workspace",
@@ -27,6 +30,7 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "lint:css": "stylelint ./*.css",
         "lint:js": "stylelint ./*.js",
+        "lint:ts": "tsc --noEmit",
         "lint": "stylelint ./*.js stylelint ./*.css",
         "start": "npx webpack-dev-server --mode development",
         "build": "npx webpack --mode production"

@@ -86,6 +86,74 @@ body {
     line-height: 32px;
 }
 
+.dots {
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+}
+
+.modal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 480px;
+    height: 459px;
+    background: #c2f5ff;
+    border-radius: 12px;
+    justify-content: space-around;
+    z-index: 1;
+    overflow: auto;
+    left: auto;
+    right: auto;
+    position: absolute;
+}
+
+.winModalContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.winImg {
+    margin-bottom: 4px;
+}
+
+.modalText {
+    font-family: StratosSkyeng, Arial, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 40px;
+    line-height: 48px;
+    color: #004980;
+    margin-bottom: 28px;
+}
+
+.secondModalText {
+    width: 230px;
+    height: 32px;
+    font-family: StratosSkyeng, Arial, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 32px;
+    color: #000;
+    margin-bottom: 10px;
+}
+
+.modalTimer {
+    width: 155px;
+    height: 72px;
+    font-family: StratosSkyeng, Arial, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 64px;
+    line-height: 72px;
+    color: #000;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
 .game_topContent {
     display: flex;
     justify-content: space-between;
@@ -94,6 +162,7 @@ body {
     margin: auto;
     margin-bottom: 40px;
     margin-top: 18px;
+    align-items: center;
 }
 
 .game_table {
@@ -130,4 +199,16 @@ body {
 
 .card {
     cursor: pointer;
+}
+
+.game_topContent-timer {
+    display: flex;
+    align-items: center;
+    width: 155px;
+    height: 72px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 64px;
+    line-height: 72px;
+    color: #fff;
 }
