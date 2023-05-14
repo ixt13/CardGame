@@ -37,7 +37,11 @@ let cardDeck = [
     { color: 'diamonds', rank: '6', img: './static/6 бубны.svg' },
 ]
 let finalCardDeck: any = []
-let i = 1
+let n = 0
+let i = 0
+let attemptsCount: any = 0
+let clickable = true
+let noIdenticalCardsCount = 0
 let timerValueSeconds = ''
 let timerValueMinutes = ''
 let timerCheckpoint = 0
@@ -57,26 +61,52 @@ class cardGame {
         const thirdLvlSelector = document.querySelector('.thirdSelector')
         timerValueSeconds = ''
         timerValueMinutes = ''
-        i = 1
+        noIdenticalCardsCount = 0
+        i = 0
+        n = 0
+        attemptsCount = 0
+        clickable = true
+        finalCardDeck = []
         timerCheckpoint = 0
-
-        firstLvlSelector?.addEventListener('click', (event) => {
-            this.easyLvl()
+        let lvlSelector = ''
+        let ss = 0
+        const activeSelector = document.querySelectorAll('.section_selector')
+        activeSelector.forEach((selector: any, index: any) => {
+            selector.addEventListener('click', (event: any) => {
+                for (let i = 0; i < activeSelector.length; i++) {
+                    const element = activeSelector[i]
+                    if (element.classList.contains('selectorActiveBorder')) {
+                        element.classList.remove('selectorActiveBorder')
+                    }
+                }
+                selector.classList.add('selectorActiveBorder')
+                lvlSelector = selector.textContent
+            })
         })
 
-        secondLvlSelector?.addEventListener('click', (event) => {
-            this.normalLvl()
-        })
+        const startButton = document.querySelector('.sectionButton')
+        startButton?.addEventListener('click', (event) => {
+            switch (lvlSelector) {
+                case '1':
+                    this.easyLvl()
+                    break
 
-        thirdLvlSelector?.addEventListener('click', (event) => {
-            this.hardLvl()
+                case '2':
+                    this.normalLvl()
+                    break
+
+                case '3':
+                    this.hardLvl()
+                    break
+            }
         })
     }
 
     easyLvl() {
         this.container.replaceChildren()
-        container?.appendChild(templateEngine(this.gameTableTemplate()))
+        attemptsCount = 5
 
+        container?.appendChild(templateEngine(this.gameTableTemplate()))
         const game = document.querySelector('.game_table')
 
         cardDeck.sort(() => Math.random() - 0.5)
@@ -97,7 +127,6 @@ class cardGame {
         const cardItems: any = document.querySelectorAll('.card')
         let firstCard: any = 'null'
         let secondCard: any = 'null'
-        let clickable = true
         cardItems.forEach((card: any, index: number) => {
             card.setAttribute('src', finalCardDeck[index].img)
             const hideCardsTimer = setTimeout(() => {
@@ -111,7 +140,6 @@ class cardGame {
                 '.game_topContent-button'
             )
             mainMenuButton?.addEventListener('click', (event) => {
-                finalCardDeck = []
                 this.gameLvlSelect()
                 clearTimeout(hideCardsTimer)
             })
@@ -151,7 +179,6 @@ class cardGame {
                             cardItems[secondCard].src
                         ) {
                             setTimeout(() => {
-                                console.log(card.src)
                                 cardItems[firstCard].src =
                                     './static/рубашка.svg'
                                 cardItems[secondCard].src =
@@ -159,6 +186,18 @@ class cardGame {
                                 firstCard = 'null'
                                 secondCard = 'null'
                                 clickable = true
+                                noIdenticalCardsCount++
+                                attemptsCount--
+                                const attemptsCountContent =
+                                    document.querySelector('.attemptsCount')
+                                attemptsCountContent!.textContent =
+                                    attemptsCount
+                                if (noIdenticalCardsCount === 5) {
+                                    timerCheckpoint = 1
+                                    i = 0
+                                    n = 1
+                                    clickable = false
+                                }
                             }, 500)
                         }
                     }
@@ -167,8 +206,9 @@ class cardGame {
                             card.className.includes('identical')
                         )
                     ) {
-                        console.log('win')
                         timerCheckpoint = 1
+                        i = 1
+                        clickable = false
                     }
                 }
             })
@@ -177,12 +217,12 @@ class cardGame {
 
     normalLvl() {
         this.container.replaceChildren()
-        container?.appendChild(templateEngine(this.gameTableTemplate()))
+        attemptsCount = 10
 
+        container?.appendChild(templateEngine(this.gameTableTemplate()))
         const game = document.querySelector('.game_table')
 
         cardDeck.sort(() => Math.random() - 0.5)
-
         for (let i = 0; i < 6; i++) {
             finalCardDeck.push(cardDeck[i])
             finalCardDeck.push(cardDeck[i])
@@ -200,10 +240,8 @@ class cardGame {
         const cardItems: any = document.querySelectorAll('.card')
         let firstCard: any = 'null'
         let secondCard: any = 'null'
-        let clickable = true
-        cardItems.forEach((card: any, index: any) => {
+        cardItems.forEach((card: any, index: number) => {
             card.setAttribute('src', finalCardDeck[index].img)
-
             const hideCardsTimer = setTimeout(() => {
                 cardItems.forEach((card: any) => {
                     card.setAttribute('src', './static/рубашка.svg')
@@ -215,7 +253,6 @@ class cardGame {
                 '.game_topContent-button'
             )
             mainMenuButton?.addEventListener('click', (event) => {
-                finalCardDeck = []
                 this.gameLvlSelect()
                 clearTimeout(hideCardsTimer)
             })
@@ -229,7 +266,6 @@ class cardGame {
                 ) {
                     card.setAttribute('src', finalCardDeck[index].img)
                     card.setAttribute('src', finalCardDeck[index].img)
-
                     if (firstCard === 'null') {
                         firstCard = index
                     } else if (index != firstCard) {
@@ -263,6 +299,18 @@ class cardGame {
                                 firstCard = 'null'
                                 secondCard = 'null'
                                 clickable = true
+                                noIdenticalCardsCount++
+                                attemptsCount--
+                                const attemptsCountContent =
+                                    document.querySelector('.attemptsCount')
+                                attemptsCountContent!.textContent =
+                                    attemptsCount
+                                if (noIdenticalCardsCount === 10) {
+                                    timerCheckpoint = 1
+                                    i = 0
+                                    n = 1
+                                    clickable = false
+                                }
                             }, 500)
                         }
                     }
@@ -271,26 +319,23 @@ class cardGame {
                             card.className.includes('identical')
                         )
                     ) {
-                        console.log('win')
                         timerCheckpoint = 1
+                        i = 1
+                        clickable = false
                     }
                 }
             })
         )
-        const mainMenuButton = document.querySelector('.game_topContent-button')
-        mainMenuButton?.addEventListener('click', (event) => {
-            finalCardDeck = []
-            this.gameLvlSelect()
-        })
     }
 
     hardLvl() {
         this.container.replaceChildren()
+        attemptsCount = 20
+
         container?.appendChild(templateEngine(this.gameTableTemplate()))
         const game = document.querySelector('.game_table')
 
         cardDeck.sort(() => Math.random() - 0.5)
-
         for (let i = 0; i < 9; i++) {
             finalCardDeck.push(cardDeck[i])
             finalCardDeck.push(cardDeck[i])
@@ -308,10 +353,8 @@ class cardGame {
         const cardItems: any = document.querySelectorAll('.card')
         let firstCard: any = 'null'
         let secondCard: any = 'null'
-        let clickable = true
-        cardItems.forEach((card: any, index: any) => {
+        cardItems.forEach((card: any, index: number) => {
             card.setAttribute('src', finalCardDeck[index].img)
-
             const hideCardsTimer = setTimeout(() => {
                 cardItems.forEach((card: any) => {
                     card.setAttribute('src', './static/рубашка.svg')
@@ -323,11 +366,11 @@ class cardGame {
                 '.game_topContent-button'
             )
             mainMenuButton?.addEventListener('click', (event) => {
-                finalCardDeck = []
                 this.gameLvlSelect()
                 clearTimeout(hideCardsTimer)
             })
         })
+
         cardItems.forEach((card: any, index: any) =>
             card.addEventListener('click', () => {
                 if (
@@ -366,11 +409,21 @@ class cardGame {
                                     './static/рубашка.svg'
                                 cardItems[secondCard].src =
                                     './static/рубашка.svg'
-                                cardItems[secondCard].src =
-                                    './static/рубашка.svg'
                                 firstCard = 'null'
                                 secondCard = 'null'
                                 clickable = true
+                                noIdenticalCardsCount++
+                                attemptsCount--
+                                const attemptsCountContent =
+                                    document.querySelector('.attemptsCount')
+                                attemptsCountContent!.textContent =
+                                    attemptsCount
+                                if (noIdenticalCardsCount === 20) {
+                                    timerCheckpoint = 1
+                                    i = 0
+                                    n = 1
+                                    clickable = false
+                                }
                             }, 500)
                         }
                     }
@@ -379,21 +432,15 @@ class cardGame {
                             card.className.includes('identical')
                         )
                     ) {
-                        console.log('win')
                         timerCheckpoint = 1
+                        i = 1
+                        clickable = false
                     }
                 }
             })
         )
-        const mainMenuButton = document.querySelector('.game_topContent-button')
-        mainMenuButton?.addEventListener('click', (event) => {
-            finalCardDeck = []
-            this.gameLvlSelect()
-        })
     }
 
-    modalWin() {}
-    modalLoose() {}
     gameTableTemplate() {
         return {
             tag: 'game',
@@ -410,6 +457,22 @@ class cardGame {
                                 { tag: 'div', cls: 'minutes', content: '00' },
                                 { tag: 'p', cls: 'dots', content: ':' },
                                 { tag: 'div', cls: 'seconds', content: '00' },
+                            ],
+                        },
+                        {
+                            tag: 'div',
+                            cls: 'game_topContent-timer',
+                            content: [
+                                {
+                                    tag: 'p',
+                                    cls: 'attemptsText',
+                                    content: 'Осталось попыток:',
+                                },
+                                {
+                                    tag: 'p',
+                                    cls: 'attemptsCount',
+                                    content: attemptsCount,
+                                },
                             ],
                         },
                         {
@@ -487,93 +550,101 @@ class cardGame {
     modalWinTemplate() {
         return {
             tag: 'div',
-            cls: 'modal',
-            content: [
-                {
-                    tag: 'div',
-                    cls: 'winModalContent',
-                    content: [
-                        {
-                            tag: 'img',
-                            cls: 'winImg',
-                            attrs: {
-                                src: './static/celebration.svg',
-                                height: '96px',
+            cls: 'modalWrapper',
+            content: {
+                tag: 'div',
+                cls: 'modal',
+                content: [
+                    {
+                        tag: 'div',
+                        cls: 'winModalContent',
+                        content: [
+                            {
+                                tag: 'img',
+                                cls: 'winImg',
+                                attrs: {
+                                    src: './static/celebration.svg',
+                                    height: '96px',
+                                },
                             },
-                        },
-                        {
-                            tag: 'p',
-                            cls: 'modalText',
-                            content: 'Вы выиграли!',
-                        },
-                        {
-                            tag: 'p',
-                            cls: 'secondModalText',
-                            content: 'Затраченное время:',
-                        },
-                        {
-                            tag: 'p',
-                            cls: 'modalTimer',
-                            content: [
-                                timerValueMinutes,
-                                { tag: 'p', cls: 'dots', content: ':' },
-                                timerValueSeconds,
-                            ],
-                        },
-                        {
-                            tag: 'button',
-                            cls: 'game_topContent-button',
-                            content: 'Играть снова',
-                        },
-                    ],
-                },
-            ],
+                            {
+                                tag: 'p',
+                                cls: 'modalText',
+                                content: 'Вы выиграли!',
+                            },
+                            {
+                                tag: 'p',
+                                cls: 'secondModalText',
+                                content: 'Затраченное время:',
+                            },
+                            {
+                                tag: 'p',
+                                cls: 'modalTimer',
+                                content: [
+                                    timerValueMinutes,
+                                    { tag: 'p', cls: 'dots', content: ':' },
+                                    timerValueSeconds,
+                                ],
+                            },
+                            {
+                                tag: 'button',
+                                cls: 'modal-button',
+                                content: 'Играть снова',
+                            },
+                        ],
+                    },
+                ],
+            },
         }
     }
     modalLoooseTempalte() {
         return {
             tag: 'div',
-            cls: 'modal',
-            content: [
-                {
-                    tag: 'div',
-                    cls: 'winModalContent',
-                    content: [
-                        {
-                            tag: 'img',
-                            cls: 'winImg',
-                            attrs: {
-                                src: './static/dead.svg',
-                                height: '96px',
+            cls: 'modalWrapper',
+            content: {
+                tag: 'div',
+                cls: 'modal',
+                content: [
+                    {
+                        tag: 'div',
+                        cls: 'winModalContent',
+                        content: [
+                            {
+                                tag: 'img',
+                                cls: 'winImg',
+                                attrs: {
+                                    src: './static/dead.svg',
+                                    height: '96px',
+                                },
                             },
-                        },
-                        {
-                            tag: 'p',
-                            cls: 'modalText',
-                            content: 'Вы проиграли!',
-                        },
-                        {
-                            tag: 'p',
-                            cls: 'secondModalText',
-                            content: 'Затраченное время:',
-                        },
-                        {
-                            tag: 'p',
-                            cls: 'modalTimer',
-                            content: [
-                                timerValueMinutes,
-                                { tag: 'p', cls: 'dots', content: ':' },
-                                timerValueSeconds,
-                            ],
-                        },
-                        {
-                            tag: 'button',
-                            cls: 'game_topContent-button',
-                            content: 'Играть снова',
-                        },
-                    ],
-                },
-            ],
+                            {
+                                tag: 'p',
+                                cls: 'modalText',
+                                content: 'Вы проиграли!',
+                            },
+                            {
+                                tag: 'p',
+                                cls: 'secondModalText',
+                                content: 'Затраченное время:',
+                            },
+                            {
+                                tag: 'p',
+                                cls: 'modalTimer',
+                                content: [
+                                    timerValueMinutes,
+                                    { tag: 'p', cls: 'dots', content: ':' },
+                                    timerValueSeconds,
+                                ],
+                            },
+                            {
+                                tag: 'button',
+                                cls: 'modal-button',
+                                content: 'Играть снова',
+                            },
+                        ],
+                    },
+                ],
+            },
         }
     }
     gameTimer() {
@@ -592,7 +663,24 @@ class cardGame {
                     container?.appendChild(
                         templateEngine(this.modalWinTemplate())
                     )
+                    const mainMenuButton =
+                        document.querySelector('.modal-button')
+                    mainMenuButton?.addEventListener('click', (event) => {
+                        this.gameLvlSelect()
+                    })
                     i++
+                    break
+                }
+                while (n === 1) {
+                    container?.appendChild(
+                        templateEngine(this.modalLoooseTempalte())
+                    )
+                    const mainMenuButton =
+                        document.querySelector('.modal-button')
+                    mainMenuButton?.addEventListener('click', (event) => {
+                        this.gameLvlSelect()
+                    })
+                    n++
                     break
                 }
             } else {

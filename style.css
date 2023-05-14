@@ -27,6 +27,11 @@ body {
     padding-top: 52px;
 }
 
+.selectorActiveBorder {
+    outline: 4px solid #004980;
+    outline-offset: -4px;
+}
+
 .section_selectors {
     display: flex;
     gap: 24px;
@@ -69,8 +74,9 @@ body {
     height: 459px;
     background: #c2f5ff;
     border-radius: 12px;
-    margin: 0 auto;
-    margin-top: 158px;
+    margin-left: calc(50% - 240px);
+    margin-right: calc(50% - 240px);
+    margin-top: 140px;
 }
 
 .sectionButton {
@@ -84,6 +90,10 @@ body {
     font-weight: 400;
     font-size: 24px;
     line-height: 32px;
+}
+
+.sectionButton:hover {
+    cursor: pointer;
 }
 
 .dots {
@@ -100,12 +110,23 @@ body {
     height: 459px;
     background: #c2f5ff;
     border-radius: 12px;
-    justify-content: space-around;
-    z-index: 1;
-    overflow: auto;
-    left: auto;
-    right: auto;
     position: absolute;
+    justify-content: space-around;
+    margin-left: calc(50% - 240px);
+    margin-right: calc(50% - 240px);
+    margin-top: 140px;
+    z-index: 100;
+}
+
+.modalWrapper {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* stylelint-disable */
+    background-color: rgba(0, 0, 0, 40%);
+    /* stylelint-enable */
 }
 
 .winModalContent {
@@ -188,13 +209,43 @@ body {
     color: #fff;
 }
 
+.game_topContent-button:hover {
+    cursor: pointer;
+}
+
+.modal-button {
+    width: 246px;
+    height: 50px;
+    background: #7ac100;
+    border-radius: 12px;
+    border: 0;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 32px;
+    color: #fff;
+}
+
+.modal-button:hover {
+    cursor: pointer;
+}
+
+.attemptsText {
+    font-family: StratosSkyeng, Arial, sans-serif;
+    font-style: normal;
+    color: #fff;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 32px;
+}
+
 .hidden {
     display: none;
 }
 
 .identical {
-    border: #7ac100 3px solid;
-    border-radius: 5%;
+    outline: 3px solid #7ac100;
+    outline-offset: -1px;
 }
 
 .card {
