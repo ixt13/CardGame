@@ -1,3 +1,5 @@
+import { HtmlTagObject } from 'html-webpack-plugin'
+
 let cardDeck = [
     { color: 'hearts', rank: 'A', img: './static/туз черви.svg' },
     { color: 'hearts', rank: 'K', img: './static/король черви.svg' },
@@ -42,8 +44,8 @@ let i = 0
 let attemptsCount: any = 0
 let clickable = true
 let noIdenticalCardsCount = 0
-let timerValueSeconds = ''
-let timerValueMinutes = ''
+let timerValueSeconds: string | null | undefined = ''
+let timerValueMinutes: string | null | undefined = ''
 let timerCheckpoint = 0
 
 class cardGame {
@@ -56,9 +58,6 @@ class cardGame {
     gameLvlSelect() {
         this.container.replaceChildren()
         container?.appendChild(templateEngine(this.gameStartTemplate()))
-        const firstLvlSelector = document.querySelector('.firstSelector')
-        const secondLvlSelector = document.querySelector('.secondSelector')
-        const thirdLvlSelector = document.querySelector('.thirdSelector')
         timerValueSeconds = ''
         timerValueMinutes = ''
         noIdenticalCardsCount = 0
@@ -68,11 +67,12 @@ class cardGame {
         clickable = true
         finalCardDeck = []
         timerCheckpoint = 0
-        let lvlSelector = ''
+        let lvlSelector: string | null = ''
         let ss = 0
-        const activeSelector = document.querySelectorAll('.section_selector')
-        activeSelector.forEach((selector: any, index: any) => {
-            selector.addEventListener('click', (event: any) => {
+        const activeSelector: NodeListOf<HTMLDivElement> =
+            document.querySelectorAll('.section_selector')
+        activeSelector.forEach((selector: HTMLDivElement) => {
+            selector.addEventListener('click', () => {
                 for (let i = 0; i < activeSelector.length; i++) {
                     const element = activeSelector[i]
                     if (element.classList.contains('selectorActiveBorder')) {
@@ -124,13 +124,14 @@ class cardGame {
             card.style.height = '100px'
         }
 
-        const cardItems: any = document.querySelectorAll('.card')
+        const cardItems: NodeListOf<HTMLImageElement> =
+            document.querySelectorAll('.card')
         let firstCard: any = 'null'
         let secondCard: any = 'null'
-        cardItems.forEach((card: any, index: number) => {
+        cardItems.forEach((card: HTMLImageElement, index: number) => {
             card.setAttribute('src', finalCardDeck[index].img)
             const hideCardsTimer = setTimeout(() => {
-                cardItems.forEach((card: any) => {
+                cardItems.forEach((card: HTMLImageElement) => {
                     card.setAttribute('src', './static/рубашка.svg')
 
                     this.gameTimer()
@@ -145,7 +146,7 @@ class cardGame {
             })
         })
 
-        cardItems.forEach((card: any, index: any) =>
+        cardItems.forEach((card: HTMLImageElement, index: number) =>
             card.addEventListener('click', () => {
                 if (
                     clickable === true &&
@@ -202,7 +203,7 @@ class cardGame {
                         }
                     }
                     if (
-                        Array.from(cardItems).every((card: any) =>
+                        Array.from(cardItems).every((card: HTMLImageElement) =>
                             card.className.includes('identical')
                         )
                     ) {
@@ -237,13 +238,14 @@ class cardGame {
             card.style.height = '100px'
         }
 
-        const cardItems: any = document.querySelectorAll('.card')
+        const cardItems: NodeListOf<HTMLImageElement> =
+            document.querySelectorAll('.card')
         let firstCard: any = 'null'
         let secondCard: any = 'null'
-        cardItems.forEach((card: any, index: number) => {
+        cardItems.forEach((card: HTMLImageElement, index: number) => {
             card.setAttribute('src', finalCardDeck[index].img)
             const hideCardsTimer = setTimeout(() => {
-                cardItems.forEach((card: any) => {
+                cardItems.forEach((card: HTMLImageElement) => {
                     card.setAttribute('src', './static/рубашка.svg')
 
                     this.gameTimer()
@@ -258,7 +260,7 @@ class cardGame {
             })
         })
 
-        cardItems.forEach((card: any, index: any) =>
+        cardItems.forEach((card: HTMLImageElement, index: number) =>
             card.addEventListener('click', () => {
                 if (
                     clickable === true &&
@@ -315,7 +317,7 @@ class cardGame {
                         }
                     }
                     if (
-                        Array.from(cardItems).every((card: any) =>
+                        Array.from(cardItems).every((card: HTMLImageElement) =>
                             card.className.includes('identical')
                         )
                     ) {
@@ -350,13 +352,14 @@ class cardGame {
             card.style.height = '100px'
         }
 
-        const cardItems: any = document.querySelectorAll('.card')
+        const cardItems: NodeListOf<HTMLImageElement> =
+            document.querySelectorAll('.card')
         let firstCard: any = 'null'
         let secondCard: any = 'null'
-        cardItems.forEach((card: any, index: number) => {
+        cardItems.forEach((card: HTMLImageElement, index: number) => {
             card.setAttribute('src', finalCardDeck[index].img)
             const hideCardsTimer = setTimeout(() => {
-                cardItems.forEach((card: any) => {
+                cardItems.forEach((card: HTMLImageElement) => {
                     card.setAttribute('src', './static/рубашка.svg')
 
                     this.gameTimer()
@@ -371,7 +374,7 @@ class cardGame {
             })
         })
 
-        cardItems.forEach((card: any, index: any) =>
+        cardItems.forEach((card: HTMLImageElement, index: number) =>
             card.addEventListener('click', () => {
                 if (
                     clickable === true &&
@@ -428,7 +431,7 @@ class cardGame {
                         }
                     }
                     if (
-                        Array.from(cardItems).every((card: any) =>
+                        Array.from(cardItems).every((card: HTMLImageElement) =>
                             card.className.includes('identical')
                         )
                     ) {
@@ -587,6 +590,16 @@ class cardGame {
                                 ],
                             },
                             {
+                                tag: 'p',
+                                cls: 'secondModalText',
+                                content: 'Осталось попыток:',
+                            },
+                            {
+                                tag: 'p',
+                                cls: 'modalTimer',
+                                content: attemptsCount,
+                            },
+                            {
                                 tag: 'button',
                                 cls: 'modal-button',
                                 content: 'Играть снова',
@@ -637,6 +650,16 @@ class cardGame {
                                 ],
                             },
                             {
+                                tag: 'p',
+                                cls: 'secondModalText',
+                                content: 'Осталось попыток:',
+                            },
+                            {
+                                tag: 'p',
+                                cls: 'modalTimer',
+                                content: attemptsCount,
+                            },
+                            {
                                 tag: 'button',
                                 cls: 'modal-button',
                                 content: 'Играть снова',
@@ -648,13 +671,13 @@ class cardGame {
         }
     }
     gameTimer() {
-        const minutesLabel: any = document.querySelector('.minutes')
-        const secondsLabel: any = document.querySelector('.seconds')
+        const minutesLabel: HTMLDivElement | null =
+            document.querySelector('.minutes')
+        const secondsLabel: HTMLDivElement | null =
+            document.querySelector('.seconds')
 
-        let totalSeconds: any = 0
-        let gameTimer: any
-
-        gameTimer = setInterval(() => {
+        let totalSeconds: number = 0
+        let gameTimer: any = setInterval(() => {
             if (timerCheckpoint === 1) {
                 gameTimer = clearInterval(gameTimer)
                 gameTimer === null
@@ -689,16 +712,16 @@ class cardGame {
         }, 1000)
 
         function setTime() {
-            timerValueSeconds = secondsLabel.textContent
-            timerValueMinutes = minutesLabel.textContent
+            timerValueSeconds = secondsLabel?.textContent
+            timerValueMinutes = minutesLabel?.textContent
 
             ++totalSeconds
-            secondsLabel.textContent = pad(totalSeconds % 60)
+            secondsLabel!.textContent = pad(totalSeconds % 60)
             //@ts-ignore
             minutesLabel.textContent = pad(parseInt(totalSeconds / 60))
         }
 
-        function pad(val: any) {
+        function pad(val: number) {
             let valString = val + ''
             if (valString.length < 2) {
                 return '0' + valString

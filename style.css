@@ -146,10 +146,11 @@ body {
     font-size: 40px;
     line-height: 48px;
     color: #004980;
-    margin-bottom: 28px;
 }
 
 .secondModalText {
+    display: flex;
+    justify-content: center;
     width: 230px;
     height: 32px;
     font-family: StratosSkyeng, Arial, sans-serif;
@@ -158,7 +159,6 @@ body {
     font-size: 24px;
     line-height: 32px;
     color: #000;
-    margin-bottom: 10px;
 }
 
 .modalTimer {
@@ -172,7 +172,6 @@ body {
     color: #000;
     display: flex;
     justify-content: center;
-    margin-bottom: 40px;
 }
 
 .game_topContent {
