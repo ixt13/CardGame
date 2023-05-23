@@ -4,5 +4,5 @@ module.exports = {
         '\\.(css|less|sass|scss)$': '<rootDir>/__mocks__/styleMock.js',
     },
     preset: 'ts-jest',
-    testEnvironment: 'jsdom',
+    testEnvironment: 'node',
 }

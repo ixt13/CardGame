@@ -1,4 +1,5 @@
 import './style.css'
+import { pad } from './helpers'
 import {
     gameTableTemplate,
     gameStartTemplate,
@@ -60,7 +61,7 @@ let timerValueSeconds: string = ''
 let timerValueMinutes: string = ''
 let timerCheckpoint = 0
 
-class cardGame {
+export class cardGame {
     container: Element
     constructor(container: Element) {
         this.container = container
@@ -543,15 +544,6 @@ class cardGame {
 
             timerValueSeconds = secondsLabel.textContent
             timerValueMinutes = minutesLabel.textContent
-        }
-
-        function pad(val: number) {
-            let valString = val + ''
-            if (valString.length < 2) {
-                return '0' + valString
-            } else {
-                return valString
-            }
         }
     }
 }
